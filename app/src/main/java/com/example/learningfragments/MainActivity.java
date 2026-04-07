@@ -1,45 +1,54 @@
 package com.example.learningfragments;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+    BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomNavigationView=findViewById(R.id.bottomNavigationView);
+        bottomNav = findViewById(R.id.bottomNavigationView);
 
-        loadFragment(new NotesFragment());
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_host_fragment);
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
+        NavController navController = navHostFragment.getNavController();
+
+        // Bottom nav clicks
+        bottomNav.setOnItemSelectedListener(item -> {
 
             if (item.getItemId() == R.id.menu_notes) {
-                loadFragment(new NotesFragment());
+                navController.navigate(R.id.notesFragment);
                 return true;
-            }
-            else if (item.getItemId() == R.id.menu_folders) {
-                loadFragment(new FolderFragment());
+            } else if (item.getItemId() == R.id.menu_folders) {
+                navController.navigate(R.id.folderFragment);
                 return true;
             }
 
             return false;
         });
-    }
 
-    private void loadFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(null) // IMPORTANT
-                .commit();
+        // Show / Hide bottom nav
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+
+            if (destination.getId() == R.id.notesFragment ||
+                    destination.getId() == R.id.folderFragment) {
+
+                bottomNav.setVisibility(View.VISIBLE);
+            } else {
+                bottomNav.setVisibility(View.GONE);
+            }
+        });
     }
 }

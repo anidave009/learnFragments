@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 public class NotesFragment extends Fragment {
 
@@ -52,23 +53,12 @@ public class NotesFragment extends Fragment {
 
             String selectedNote = notes[position];
 
-            // Create fragment
-            NoteDetailFragment fragment = new NoteDetailFragment();
-
-            // Pass data
             Bundle bundle = new Bundle();
-            bundle.putString("note_key", selectedNote);
-            fragment.setArguments(bundle);
+            bundle.putString("note", selectedNote);
 
-            // Load fragment
-            requireActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .addToBackStack(null) // IMPORTANT
-                    .commit();
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_notes_to_detail, bundle);
         });
-
         return view;
     }
 

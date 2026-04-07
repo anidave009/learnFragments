@@ -24,10 +24,9 @@ public class NoteDetailFragment extends Fragment {
 
         TextView tvContent = view.findViewById(R.id.tvNoteContent);
 
-        // Get data from bundle
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String note = bundle.getString("note_key");
+            String note = bundle.getString("note");
             tvContent.setText(note);
         }
 

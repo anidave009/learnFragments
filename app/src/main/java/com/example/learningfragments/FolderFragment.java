@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 public class FolderFragment extends Fragment {
 
@@ -47,17 +48,16 @@ public class FolderFragment extends Fragment {
 
         listView.setAdapter(adapter);
 
-        // Click listener (simulate opening folder details)
         listView.setOnItemClickListener((parent, view1, position, id) -> {
+
             String selectedFolder = folders[position];
 
-            Toast.makeText(requireContext(),
-                    "Opening Folder: " + selectedFolder,
-                    Toast.LENGTH_SHORT).show();
+            Bundle bundle = new Bundle();
+            bundle.putString("folder", selectedFolder);
 
-            // Later: open FolderDetailFragment
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_folder_to_detail, bundle);
         });
-
         return view;
     }
 }

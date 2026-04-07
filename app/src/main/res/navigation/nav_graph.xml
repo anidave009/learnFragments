@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/notesFragment">
+
+    <!-- Notes -->
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.example.learningfragments.NotesFragment"
+        android:label="Notes">
+
+        <action
+            android:id="@+id/action_notes_to_detail"
+            app:destination="@id/noteDetailFragment" />
+    </fragment>
+
+    <!-- Folder -->
+    <fragment
+        android:id="@+id/folderFragment"
+        android:name="com.example.learningfragments.FolderFragment"
+        android:label="Folders">
+
+        <action
+            android:id="@+id/action_folder_to_detail"
+            app:destination="@id/folderDetailFragment" />
+    </fragment>
+
+    <!-- Note Detail -->
+    <fragment
+        android:id="@+id/noteDetailFragment"
+        android:name="com.example.learningfragments.NoteDetailFragment">
+
+        <argument
+            android:name="note"
+            app:argType="string" />
+    </fragment>
+
+    <!-- Folder Detail -->
+    <fragment
+        android:id="@+id/folderDetailFragment"
+        android:name="com.example.learningfragments.FolderDetailFragment">
+
+        <argument
+            android:name="folder"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
